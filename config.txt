@@ -1,4 +1,0 @@
-semester=Fall_24
-courses=OS  OS_lab  DBMS  DBMS_lab
-backup_time=23:00
-backup_location=/home/jojo/Pro_b

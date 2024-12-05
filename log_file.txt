@@ -41,3 +41,13 @@
 -----------------------------------
 2024-12-05 23:44:58 - Starting restore backup
 2024-12-05 23:45:00 - Restore completed successfully.
+
+2024-12-06 00:28:22 - Initiating end semester process for Fall_24
+
+2024-12-06 00:28:33 - Old backups deleted successfully.
+
+2024-12-06 00:28:33 - Final backup successfully created at /home/jojo/Pro_b/Fall_24_final_backup_2024-12-06_00-28.zip
+
+2024-12-06 00:28:33 - Semester folder '/home/jojo/Documents/GitHub/OS_project/Fall_24' deleted successfully.
+
+2024-12-06 00:28:33 - Configuration file deleted successfully.

@@ -25,7 +25,8 @@ show_menu() {
     echo "2. Backup Now"
     echo "3. Restore Backup"
     echo "4. Check Schedule Backup Status"
-    echo "5. Exit"
+    echo "5. End Semester"
+    echo "6. Exit"
     echo "Enter your choice:"
     read -r choice
     case $choice in
@@ -33,7 +34,8 @@ show_menu() {
         2) backup_now ;;
         3) restore_backup ;;
         4) check_schedule_backup_status ;;
-        5) echo "Exiting..."; exit 0 ;;
+        5) end_semester ;;
+        6) echo "Exiting..."; exit 0 ;;
         *) echo "Invalid choice. Try again." ;;
     esac
 }
@@ -214,6 +216,77 @@ check_schedule_backup_status() {
         echo "$(date '+%Y-%m-%d %H:%M:%S') - No backup schedule found." >> "$log_file"
     fi
 }
+
+# End semester function
+end_semester() {
+    log_file="/home/jojo/Documents/GitHub/OS_project/log_file.txt"
+
+    # Read the semester name from the configuration
+    config_file="/home/jojo/Documents/GitHub/OS_project/config.txt"
+    if [[ ! -f $config_file ]]; then
+        echo -e "\n$(date '+%Y-%m-%d %H:%M:%S') - Error: Configuration file not found. Please run setup first." >> "$log_file"
+        echo -e "${RED}Error: Configuration file not found. Please run setup first.${NC}"
+        return
+    fi
+
+    semester=$(grep "semester=" "$config_file" | cut -d'=' -f2)
+    backup_location=$(grep "backup_location=" "$config_file" | cut -d'=' -f2)
+    semester_dir="/home/jojo/Documents/GitHub/OS_project/$semester"
+
+    echo -e "\n$(date '+%Y-%m-%d %H:%M:%S') - Initiating end semester process for $semester" >> "$log_file"
+    
+    # Confirm with the user before proceeding
+    echo "Are you sure you want to end the semester '$semester'? This will create a final backup, delete older backups, and remove the semester folder. (yes/no)"
+    read -r confirm
+    if [[ "$confirm" != "yes" ]]; then
+        echo -e "\n$(date '+%Y-%m-%d %H:%M:%S') - End semester process aborted by user." >> "$log_file"
+        echo -e "${RED}End semester process aborted.${NC}"
+        return
+    fi
+
+    # Delete all existing backups for this semester
+    echo "Deleting old backups for the semester..."
+    find "$backup_location" -name "${semester}_backup_*.zip" -delete
+    if [[ $? -eq 0 ]]; then
+        echo -e "\n$(date '+%Y-%m-%d %H:%M:%S') - Old backups deleted successfully." >> "$log_file"
+        echo -e "${GREEN}Old backups deleted successfully.${NC}"
+    else
+        echo -e "\n$(date '+%Y-%m-%d %H:%M:%S') - Error: Failed to delete old backups." >> "$log_file"
+        echo -e "${RED}Error: Failed to delete old backups.${NC}"
+        return
+    fi
+
+    # Create a final backup
+    echo "Creating final backup for the semester..."
+    final_backup_file="$backup_location/${semester}_final_backup_$(date +%F_%H-%M).zip"
+    zip -r "$final_backup_file" "$semester_dir" >/dev/null 2>&1
+    if [[ $? -eq 0 ]]; then
+        echo -e "\n$(date '+%Y-%m-%d %H:%M:%S') - Final backup successfully created at $final_backup_file" >> "$log_file"
+        echo -e "${GREEN}Final backup successfully created at $final_backup_file.${NC}"
+    else
+        echo -e "\n$(date '+%Y-%m-%d %H:%M:%S') - Error: Final backup failed!" >> "$log_file"
+        echo -e "${RED}Error: Final backup failed. Aborting end semester process.${NC}"
+        return
+    fi
+
+    # Delete the semester folder
+    if [[ -d $semester_dir ]]; then
+        rm -rf "$semester_dir"
+        echo -e "\n$(date '+%Y-%m-%d %H:%M:%S') - Semester folder '$semester_dir' deleted successfully." >> "$log_file"
+        echo -e "${GREEN}Semester folder '$semester_dir' deleted successfully.${NC}"
+    else
+        echo -e "\n$(date '+%Y-%m-%d %H:%M:%S') - Error: Semester folder not found. Skipping deletion." >> "$log_file"
+        echo -e "${RED}Error: Semester folder not found. Skipping deletion.${NC}"
+    fi
+
+    # Clear the configuration file
+    rm -f "$config_file"
+    echo -e "\n$(date '+%Y-%m-%d %H:%M:%S') - Configuration file deleted successfully." >> "$log_file"
+    echo -e "${GREEN}Configuration file deleted successfully.${NC}" 
+
+    echo -e "${GREEN}End of semester $semester process completed.${NC}"
+}
+
 
 # Main Loop (only shows menu if no argument is passed)
 if [[ "$1" == "backup" ]]; then
