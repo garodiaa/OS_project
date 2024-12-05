@@ -1,4 +1,4 @@
-semester=Fall_24
-courses=DM  NLP  OS  OS_Lab
-backup_time=23:30
+semester=last11
+courses=OS OS_lab
+backup_time=22:16
 backup_location=/home/jojo/Pro_b

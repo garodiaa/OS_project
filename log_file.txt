@@ -1,0 +1,34 @@
+2024-12-05 21:36:32 - Starting backup schedule
+2024-12-05 21:36:32 - Removed old cron jobs for backup
+2024-12-05 21:36:32 - Backup scheduled at 21:38 daily
+2024-12-05 21:43:36 - Starting backup schedule
+2024-12-05 21:43:36 - Removed old cron jobs for backup
+2024-12-05 21:43:36 - Backup scheduled at 21:45 daily
+2024-12-05 21:54:40 - Starting backup schedule
+2024-12-05 21:54:40 - Removed old cron jobs for backup
+2024-12-05 21:54:41 - Backup scheduled at 21:56 daily
+grep: config.txt: No such file or directory
+grep: config.txt: No such file or directory
+grep: config.txt: No such file or directory
+2024-12-05 21:56:01 - Starting backup for semester 
+2024-12-05 21:56:01 - Error: Semester folder not found.
+2024-12-05 22:03:07 - Starting backup schedule
+2024-12-05 22:03:07 - Removed old cron jobs for backup
+2024-12-05 22:03:07 - Backup scheduled at 22:04 daily
+2024-12-05 22:04:01 - Starting backup for semester mon22
+2024-12-05 22:04:01 - Error: Semester folder not found.
+2024-12-05 22:08:06 - Starting backup for semester mon22
+2024-12-05 22:08:06 - Backup successfully created at /home/jojo/Pro_b/mon22_backup_2024-12-05.zip
+2024-12-05 22:09:25 - Starting backup schedule
+2024-12-05 22:09:25 - Removed old cron jobs for backup
+2024-12-05 22:09:25 - Backup scheduled at 22:11 daily
+2024-12-05 22:11:01 - Starting backup for semester fuck2
+2024-12-05 22:11:01 - Error: Semester folder not found.
+2024-12-05 22:14:03 - Starting backup schedule
+2024-12-05 22:14:03 - Removed old cron jobs for backup
+2024-12-05 22:14:03 - Backup scheduled at 22:14 daily
+2024-12-05 22:14:50 - Starting backup schedule
+2024-12-05 22:14:50 - Removed old cron jobs for backup
+2024-12-05 22:14:50 - Backup scheduled at 22:16 daily
+2024-12-05 22:16:01 - Starting backup for semester last11
+2024-12-05 22:16:01 - Backup successfully created at /home/jojo/Pro_b/last11_backup_2024-12-05.zip
