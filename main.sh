@@ -32,8 +32,9 @@ show_menu() {
     echo "3. Restore Backup"
     echo "4. Check Schedule Backup Status"
     echo "5. Update Schedule Backup Time"
-    echo "6. End Semester"
-    echo "7. Exit"
+    echo "6. Extract Resources"
+    echo "7. End Semester"
+    echo "8. Exit"
     echo "Enter your choice:"
     read -r choice
     case $choice in
@@ -42,8 +43,9 @@ show_menu() {
         3) restore_backup ;;
         4) check_schedule_backup_status ;;
         5) update_schedule_backup_time ;;
-        6) end_semester ;;
-        7) echo "Exiting..."; exit 0 ;;
+        6) extract_resources ;;
+        7) end_semester ;;
+        8) echo "Exiting..."; exit 0 ;;
         *) echo -e "${RED}Invalid choice. Try again.${NC}" ;;
     esac
 }
@@ -257,6 +259,102 @@ update_schedule_backup_time() {
     schedule_backup
 
 }
+
+# Extract Resources Function
+extract_resources() {
+    local semester=$(grep "semester=" config.txt | cut -d'=' -f2)  # Automatically fetch semester from config
+    local semester_dir="/home/jojo/Documents/GitHub/OS_project/$semester"
+    local courses_string=$(grep "courses=" config.txt | cut -d'=' -f2)
+    IIFS=' ' read -r -a courses <<< "$courses_string"  # Automatically fetch courses from config.txt
+    local chosen_course
+    local chosen_resource
+    local output_dir="extracted_resources"
+    local zip_file="resources_$(date +%Y-%m-%d_%H-%M-%S).zip"
+
+    echo "-----------------------------------" >> "$log_file"
+    echo "$(date '+%Y-%m-%d %H:%M:%S') - Starting extract resources process" >> "$log_file"
+
+    # Verify if semester directory exists
+    if [[ ! -d $semester_dir ]]; then
+        echo "$(date '+%Y-%m-%d %H:%M:%S') - Error: Semester directory not found." >> "$log_file"
+        echo -e "${RED}Error: Semester directory not found.${NC}"
+        return 1
+    fi
+
+    # Display available courses
+    echo "Available courses:"
+    for i in "${!courses[@]}"; do
+        echo "$((i + 1)). ${courses[i]}"
+    done
+
+    # Prompt user to choose courses
+    echo "Enter the number(s) of the course(s) you want to extract resources from (comma-separated):"
+    read -r course_choice
+    if [[ -z $course_choice ]]; then
+        echo "$(date '+%Y-%m-%d %H:%M:%S') - Error: No course selected." >> "$log_file"
+        echo -e "${RED}Error: No course selected.${NC}"
+        return 1
+    fi
+
+    # Convert course choices into an array
+    IFS=',' read -r -a selected_courses_indices <<< "$course_choice"
+
+    # Validate course selection
+    for index in "${selected_courses_indices[@]}"; do
+        if [[ ! "$index" =~ ^[0-9]+$ ]] || [[ $index -lt 1 || $index -gt ${#courses[@]} ]]; then
+            echo "$(date '+%Y-%m-%d %H:%M:%S') - Error: Invalid course selection: $index." >> "$log_file"
+            echo -e "${RED}Error: Invalid course selection: $index.${NC}"
+            return 1
+        fi
+    done
+
+    # Create the output directory
+    mkdir -p "$output_dir"
+
+    # Prompt user to choose the type of resource to extract
+    echo "Enter the type of resource you want to extract (e.g., assignment, presentation, mid-essentials, etc.):"
+    read -r chosen_resource
+    if [[ -z $chosen_resource ]]; then
+        echo "$(date '+%Y-%m-%d %H:%M:%S') - Error: No resource type selected." >> "$log_file"
+        echo -e "${RED}Error: No resource type selected.${NC}"
+        return 1
+    fi
+
+    # Process each selected course
+    for index in "${selected_courses_indices[@]}"; do
+        chosen_course="${courses[$((index - 1))]}"
+        course_dir="$semester_dir/$chosen_course"
+        echo "Selected course: $chosen_course"
+
+        # Check if the chosen resource exists in the course directory
+        if [[ -d "$course_dir/$chosen_resource" ]]; then
+            # Concatenate the course and resource name to create a unique folder name for rsync
+            rsync -a "$course_dir/$chosen_resource" "$output_dir/${chosen_course}_${chosen_resource}/"
+            echo "$(date '+%Y-%m-%d %H:%M:%S') - Added $chosen_resource from $chosen_course to $output_dir." >> "$log_file"
+        else
+            echo "$(date '+%Y-%m-%d %H:%M:%S') - Resource $chosen_resource not found in $chosen_course." >> "$log_file"
+            echo -e "${RED}Resource $chosen_resource not found in $chosen_course.${NC}"
+            return 1
+        fi
+    done
+
+    # Zip the extracted files
+    zip -r "$zip_file" "$output_dir" >/dev/null 2>&1
+    if [[ $? -eq 0 ]]; then
+        echo "$(date '+%Y-%m-%d %H:%M:%S') - Resources successfully extracted and zipped: $zip_file" >> "$log_file"
+        echo -e "${GREEN}Resources successfully extracted and zipped: $zip_file${NC}"
+    else
+        echo "$(date '+%Y-%m-%d %H:%M:%S') - Error: Failed to zip the resources." >> "$log_file"
+        echo -e "${RED}Error: Failed to zip the resources.${NC}"
+    fi
+
+    # Clean up the temporary output directory
+    rm -rf "$output_dir"
+    echo "$(date '+%Y-%m-%d %H:%M:%S') - Temporary directory $output_dir deleted." >> "$log_file"
+}
+
+
+
 
 # End semester function
 end_semester() {

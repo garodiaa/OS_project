@@ -143,3 +143,57 @@
 -----------------------------------
 2024-12-06 01:02:08 - Checking backup schedule status
 2024-12-06 01:02:08 - Backup is scheduled.
+-----------------------------------
+2024-12-06 01:28:07 - Starting extract resources process
+2024-12-06 01:28:41 - Invalid course selection: aa.
+2024-12-06 01:28:41 - Resources successfully extracted and zipped: resources_2024-12-06_01-28-07.zip
+-----------------------------------
+2024-12-06 01:37:53 - Starting extract resources process
+2024-12-06 01:38:08 - Resource assignment not found in DBMS.
+2024-12-06 01:38:08 - Resource assignment not found in OS.
+2024-12-06 01:38:08 - Resources successfully extracted and zipped: resources_2024-12-06_01-37-53.zip
+2024-12-06 01:38:08 - Temporary directory extracted_resources deleted.
+-----------------------------------
+2024-12-06 01:47:45 - Starting extract resources process
+-----------------------------------
+2024-12-06 01:49:37 - Starting extract resources process
+-----------------------------------
+2024-12-06 01:52:32 - Starting extract resources process
+-----------------------------------
+2024-12-06 01:54:16 - Starting extract resources process
+2024-12-06 01:54:36 - Resource assignment not found in OS.
+
+2024-12-06 01:58:59 - Initiating end semester process for Try_22
+
+2024-12-06 01:59:01 - Old backups deleted successfully.
+
+2024-12-06 01:59:01 - Final backup successfully created at /home/jojo/Pro_b/Try_22_final_backup_2024-12-06_01-59.zip
+
+2024-12-06 01:59:01 - Semester folder '/home/jojo/Documents/GitHub/OS_project/Try_22' deleted successfully.
+
+2024-12-06 01:59:01 - Configuration file deleted successfully.
+-----------------------------------
+2024-12-06 01:59:46 - Starting backup schedule
+2024-12-06 01:59:46 - Removed old cron jobs for backup
+2024-12-06 01:59:46 - Backup scheduled at 22:22 daily
+-----------------------------------
+2024-12-06 01:59:53 - Starting immediate backup
+-----------------------------------
+2024-12-06 01:59:53 - Starting backup for semester Jojo24
+2024-12-06 01:59:53 - Backup successfully created at /home/jojo/Pro_b/Jojo24_backup_2024-12-06_01-59.zip
+2024-12-06 01:59:53 - Immediate backup completed
+-----------------------------------
+2024-12-06 01:59:57 - Checking backup schedule status
+2024-12-06 01:59:57 - Backup is scheduled.
+-----------------------------------
+2024-12-06 02:00:03 - Starting extract resources process
+2024-12-06 02:00:16 - Added assignment from DBMS to extracted_resources.
+2024-12-06 02:00:16 - Added assignment from OS to extracted_resources.
+2024-12-06 02:00:16 - Resources successfully extracted and zipped: resources_2024-12-06_02-00-03.zip
+2024-12-06 02:00:16 - Temporary directory extracted_resources deleted.
+-----------------------------------
+2024-12-06 02:12:02 - Starting extract resources process
+2024-12-06 02:12:12 - Added assignment from DBMS to extracted_resources.
+2024-12-06 02:12:12 - Added assignment from OS to extracted_resources.
+2024-12-06 02:12:12 - Resources successfully extracted and zipped: resources_2024-12-06_02-12-02.zip
+2024-12-06 02:12:12 - Temporary directory extracted_resources deleted.
