@@ -1,0 +1,4 @@
+semester=Try_22
+courses=OS_lab  OS  DBMS
+backup_time=22:22
+backup_location=/home/jojo/Pro_b

@@ -5,6 +5,12 @@ RED='\033[0;31m'
 GREEN='\033[0;32m'
 NC='\033[0m' # No Color (Reset)
 
+# Configuration file path
+config_file="/home/jojo/Documents/GitHub/OS_project/config.txt"
+
+# Log file path
+log_file="/home/jojo/Documents/GitHub/OS_project/log_file.txt"
+
 #BG Colors
 BG_RED='\033[41m'
 BG_GREEN='\033[42m'
@@ -25,8 +31,9 @@ show_menu() {
     echo "2. Backup Now"
     echo "3. Restore Backup"
     echo "4. Check Schedule Backup Status"
-    echo "5. End Semester"
-    echo "6. Exit"
+    echo "5. Update Schedule Backup Time"
+    echo "6. End Semester"
+    echo "7. Exit"
     echo "Enter your choice:"
     read -r choice
     case $choice in
@@ -34,9 +41,10 @@ show_menu() {
         2) backup_now ;;
         3) restore_backup ;;
         4) check_schedule_backup_status ;;
-        5) end_semester ;;
-        6) echo "Exiting..."; exit 0 ;;
-        *) echo "Invalid choice. Try again." ;;
+        5) update_schedule_backup_time ;;
+        6) end_semester ;;
+        7) echo "Exiting..."; exit 0 ;;
+        *) echo -e "${RED}Invalid choice. Try again.${NC}" ;;
     esac
 }
 
@@ -100,7 +108,7 @@ create_folders() {
 
 # Backup Function
 backup() {
-    log_file="/home/jojo/Documents/GitHub/OS_project/log_file.txt"
+    # config_file is already defined at the top
 
     # Read values from config.txt
     config_file="/home/jojo/Documents/GitHub/OS_project/config.txt"
@@ -131,7 +139,7 @@ backup() {
 
 # Schedule Backup
 schedule_backup() {
-    log_file="/home/jojo/Documents/GitHub/OS_project/log_file.txt"  # Replace with the path to your desired log file
+    # log_file is already defined at the top of the script
 
     # Log the start of the function
     echo "-----------------------------------" >> "$log_file"
@@ -209,12 +217,45 @@ check_schedule_backup_status() {
 
     # Check if the backup job is scheduled in crontab
     if crontab -l 2>/dev/null | grep -q "$(pwd)/main.sh backup"; then
-        echo -e "${GREEN}Backup is scheduled.${NC}"
+        backup_time=$(grep "backup_time=" config.txt | cut -d'=' -f2)
+        echo -e "${GREEN}Backup is scheduled daily at $backup_time.${NC}"
         echo "$(date '+%Y-%m-%d %H:%M:%S') - Backup is scheduled." >> "$log_file"
     else
         echo -e "${RED}No backup schedule found.${NC}"
         echo "$(date '+%Y-%m-%d %H:%M:%S') - No backup schedule found." >> "$log_file"
     fi
+}
+
+# update schedule backup time
+update_schedule_backup_time() {
+    log_file="/home/jojo/Documents/GitHub/OS_project/log_file.txt"
+
+    # Log the start of the function
+    echo "-----------------------------------" >> "$log_file"
+    echo "$(date '+%Y-%m-%d %H:%M:%S') - Updating backup schedule time" >> "$log_file"
+
+    # Read the current backup time from the configuration
+    config_file="/home/jojo/Documents/GitHub/OS_project/config.txt"
+    backup_time=$(grep "backup_time=" "$config_file" | cut -d'=' -f2)
+
+    # Prompt the user to enter the new backup time
+    echo "Enter the new backup time in 24-hour format (HH:MM):"
+    read -r new_backup_time
+    if [[ ! $new_backup_time =~ ^[0-2][0-9]:[0-5][0-9]$ ]]; then
+        echo -e "${RED}Invalid time format.${NC}"
+        echo "$(date '+%Y-%m-%d %H:%M:%S') - Error: Invalid time format." >> "$log_file"
+        return
+    fi
+
+    # Update the backup_time variable
+    backup_time=$new_backup_time
+    sed -i "s/^backup_time=.*/backup_time=$new_backup_time/" "$config_file"
+    echo "$(date '+%Y-%m-%d %H:%M:%S') - Backup time updated to $new_backup_time" >> "$log_file"
+    echo -e "${GREEN}Backup time updated to $new_backup_time.${NC}"
+
+    # Reschedule the backup job with the new time
+    schedule_backup
+
 }
 
 # End semester function
@@ -283,6 +324,9 @@ end_semester() {
     rm -f "$config_file"
     echo -e "\n$(date '+%Y-%m-%d %H:%M:%S') - Configuration file deleted successfully." >> "$log_file"
     echo -e "${GREEN}Configuration file deleted successfully.${NC}" 
+
+    # Clear the cron jobs
+    crontab -l 2>/dev/null | grep -v "$(pwd)/main.sh backup" | crontab - 2>> "$log_file"
 
     echo -e "${GREEN}End of semester $semester process completed.${NC}"
 }
