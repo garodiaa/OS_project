@@ -307,6 +307,7 @@ extract_resources() {
     local chosen_resource
     local output_dir="extracted_resources"
     local zip_file="resources_$(date +%Y-%m-%d_%H-%M-%S).zip"
+    local selected_course_name=""
 
     echo "-----------------------------------" >> "$log_file"
     echo "$(date '+%Y-%m-%d %H:%M:%S') - Starting extract resources process" >> "$log_file"
@@ -360,6 +361,7 @@ extract_resources() {
     # Process each selected course
     for index in "${selected_courses_indices[@]}"; do
         chosen_course="${courses[$((index - 1))]}"
+        selected_course_name="${selected_course_name}${chosen_course}_"
         course_dir="$semester_dir/$chosen_course"
         echo "Selected course: $chosen_course"
 
@@ -377,7 +379,7 @@ extract_resources() {
 
     # Zip the extracted files
     mkdir -p "extracted_files"
-    zip_file="extracted_files/resources_$(date +%Y-%m-%d_%H-%M-%S).zip"
+    zip_file="extracted_files/resources_${selected_course_name}_${chosen_resource}_$(date +%Y-%m-%d).zip"
     zip -r "$zip_file" "$output_dir" >/dev/null 2>&1
     if [[ $? -eq 0 ]]; then
         echo "$(date '+%Y-%m-%d %H:%M:%S') - Resources successfully extracted and zipped: $zip_file" >> "$log_file"
@@ -466,7 +468,6 @@ terminate_semester() {
 
     echo -e "${GREEN}End of semester $semester process completed.${NC}"
 }
-
 
 # Main Loop (only shows menu if no argument is passed)
 if [[ "$1" == "backup" ]]; then

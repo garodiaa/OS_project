@@ -1,4 +1,4 @@
-semester=Jojo24
-courses=DBMS DBMS_lab OS OS_lab
-backup_time=22:22
+semester=Fall_2024
+courses=OS OS_lab NLP DBMS DBMS_lab DMML DMML_lab
+backup_time=23:30
 backup_location=/home/jojo/Pro_b

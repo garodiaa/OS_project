@@ -272,3 +272,36 @@
 2024-12-08 20:06:24 - Added presentation from OS to extracted_resources.
 2024-12-08 20:06:24 - Resources successfully extracted and zipped: extracted_files/resources_2024-12-08_20-06-24.zip
 2024-12-08 20:06:24 - Temporary directory extracted_resources deleted.
+
+2024-12-08 20:45:13 - Initiating terminate semester process for Jojo24
+
+2024-12-08 20:45:18 - Old backups deleted successfully.
+
+2024-12-08 20:45:18 - Final backup successfully created at /home/jojo/Pro_b/Jojo24_final_backup_2024-12-08_20-45.zip
+
+2024-12-08 20:45:18 - Semester folder '/home/jojo/Documents/GitHub/OS_project/Jojo24' deleted successfully.
+
+2024-12-08 20:45:18 - Configuration file deleted successfully.
+-----------------------------------
+2024-12-08 20:52:59 - Starting extract resources process
+2024-12-08 20:53:03 - Error: Invalid course selection: 1.
+-----------------------------------
+2024-12-08 20:53:54 - Starting backup schedule
+2024-12-08 20:53:54 - Removed old cron jobs for backup
+2024-12-08 20:53:54 - Backup scheduled at 23:30 daily
+-----------------------------------
+2024-12-08 20:54:22 - Starting extract resources process
+2024-12-08 20:54:37 - Resource Assignment not found in OS.
+-----------------------------------
+2024-12-08 20:55:09 - Starting extract resources process
+2024-12-08 20:55:24 - Added assignment from OS to extracted_resources.
+2024-12-08 20:55:24 - Added assignment from NLP to extracted_resources.
+2024-12-08 20:55:24 - Added assignment from DMML to extracted_resources.
+2024-12-08 20:55:24 - Resources successfully extracted and zipped: extracted_files/resources_DMML_assignment_2024-12-08.zip
+2024-12-08 20:55:24 - Temporary directory extracted_resources deleted.
+-----------------------------------
+2024-12-08 21:00:33 - Starting extract resources process
+2024-12-08 21:00:41 - Added assignment from OS to extracted_resources.
+2024-12-08 21:00:41 - Added assignment from NLP to extracted_resources.
+2024-12-08 21:00:41 - Resources successfully extracted and zipped: extracted_files/resources_OS_NLP__assignment_2024-12-08.zip
+2024-12-08 21:00:42 - Temporary directory extracted_resources deleted.
