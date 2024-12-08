@@ -305,3 +305,6 @@
 2024-12-08 21:00:41 - Added assignment from NLP to extracted_resources.
 2024-12-08 21:00:41 - Resources successfully extracted and zipped: extracted_files/resources_OS_NLP__assignment_2024-12-08.zip
 2024-12-08 21:00:42 - Temporary directory extracted_resources deleted.
+-----------------------------------
+2024-12-08 23:30:01 - Starting backup for semester Fall_2024
+2024-12-08 23:30:01 - Backup successfully created at /home/jojo/Pro_b/Fall_2024_backup_2024-12-08_23-30.zip
