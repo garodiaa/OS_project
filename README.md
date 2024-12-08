@@ -1,3 +1,4 @@
+![Logo_git](https://github.com/user-attachments/assets/445f98f4-1abc-41fa-8eb9-f193f81b99fa)
 # Uni-Chronicle: An Automated Shell Solution for Academic File Management
 
 Uni-Chronicle is a shell-script-based automation tool designed to simplify and streamline file organization and backup management for university students. Built for Ubuntu, this project ensures that students can effortlessly organize their academic files for theory and lab courses, manage backups, and optimize their workflow throughout the semester.
