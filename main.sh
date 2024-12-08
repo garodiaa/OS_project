@@ -26,7 +26,7 @@ log_file="/home/jojo/Documents/GitHub/OS_project/log_file.txt"
 # Show Menu
 show_menu() {
     echo "-----------------------------------"
-    echo -e "      ${BOLD_BLUE}File Management System${NC}"
+    echo -e "           ${BOLD_BLUE}Uni-Chronicle${NC}"
     echo "-----------------------------------"
     echo "1. Setup Environment"
     echo "2. Create Backup Now"
