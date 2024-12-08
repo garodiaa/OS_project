@@ -197,3 +197,78 @@
 2024-12-06 02:12:12 - Added assignment from OS to extracted_resources.
 2024-12-06 02:12:12 - Resources successfully extracted and zipped: resources_2024-12-06_02-12-02.zip
 2024-12-06 02:12:12 - Temporary directory extracted_resources deleted.
+-----------------------------------
+2024-12-08 19:04:48 - Checking backup schedule status
+2024-12-08 19:04:48 - Backup is scheduled.
+-----------------------------------
+2024-12-08 19:05:06 - Starting immediate backup
+-----------------------------------
+2024-12-08 19:05:06 - Starting backup for semester Jojo24
+2024-12-08 19:05:06 - Backup successfully created at /home/jojo/Pro_b/Jojo24_backup_2024-12-08_19-05.zip
+2024-12-08 19:05:06 - Immediate backup completed
+-----------------------------------
+2024-12-08 19:05:42 - Starting immediate backup
+-----------------------------------
+2024-12-08 19:05:42 - Starting backup for semester Jojo24
+2024-12-08 19:05:42 - Backup successfully created at /home/jojo/Pro_b/Jojo24_backup_2024-12-08_19-05.zip
+2024-12-08 19:05:42 - Immediate backup completed
+-----------------------------------
+2024-12-08 19:05:56 - Starting restore backup
+-----------------------------------
+2024-12-08 19:09:38 - Starting restore backup
+-----------------------------------
+2024-12-08 19:17:12 - Starting restore backup
+2024-12-08 19:17:12 - Error: Backup location not found.
+-----------------------------------
+2024-12-08 19:18:52 - Starting restore backup
+2024-12-08 19:19:30 - Restore completed successfully.
+-----------------------------------
+2024-12-08 19:20:38 - Starting extract resources process
+-----------------------------------
+2024-12-08 19:28:16 - Checking backup schedule status
+2024-12-08 19:28:16 - Backup is scheduled.
+
+2024-12-08 19:47:23 - Initiating terminate semester process for Jojo24
+
+2024-12-08 19:48:40 - Terminate semester process aborted by user.
+-----------------------------------
+2024-12-08 19:48:49 - Starting extract resources process
+2024-12-08 19:49:22 - Error: Invalid course selection: 9.
+-----------------------------------
+2024-12-08 19:49:28 - Starting extract resources process
+2024-12-08 19:49:35 - Error: Invalid course selection: 0.
+-----------------------------------
+2024-12-08 19:49:42 - Starting extract resources process
+2024-12-08 19:50:24 - Resource f not found in DBMS.
+-----------------------------------
+2024-12-08 19:52:08 - Starting extract resources process
+2024-12-08 19:52:20 - Added assignment from DBMS to extracted_resources.
+2024-12-08 19:52:20 - Added assignment from OS to extracted_resources.
+2024-12-08 19:52:20 - Resources successfully extracted and zipped: resources_2024-12-08_19-52-08.zip
+2024-12-08 19:52:20 - Temporary directory extracted_resources deleted.
+-----------------------------------
+2024-12-08 19:57:22 - Starting extract resources process
+2024-12-08 19:57:28 - Added assignment from DBMS to extracted_resources.
+2024-12-08 19:57:28 - Resources successfully extracted and zipped: /home/jojo/Documents/GitHub/OS_project/Jojo24/extracted_resources/resources_2024-12-08_19-57-28.zip
+2024-12-08 19:57:28 - Temporary directory extracted_resources deleted.
+-----------------------------------
+2024-12-08 19:59:27 - Starting extract resources process
+2024-12-08 19:59:33 - Added assignment from DBMS to extracted_resources.
+2024-12-08 19:59:33 - Resources successfully extracted and zipped: extracted_resources/resources_2024-12-08_19-59-33.zip
+2024-12-08 19:59:33 - Temporary directory extracted_resources deleted.
+-----------------------------------
+2024-12-08 20:02:33 - Starting extract resources process
+2024-12-08 20:02:38 - Added assignment from DBMS to extracted_resources.
+2024-12-08 20:02:38 - Resources successfully extracted and zipped: extracted_resources/resources_2024-12-08_20-02-38.zip
+2024-12-08 20:02:38 - Temporary directory extracted_resources deleted.
+-----------------------------------
+2024-12-08 20:05:32 - Starting extract resources process
+2024-12-08 20:05:38 - Added assignment from DBMS to extracted_resources.
+2024-12-08 20:05:38 - Resources successfully extracted and zipped: extracted_files/resources_2024-12-08_20-05-38.zip
+2024-12-08 20:05:38 - Temporary directory extracted_resources deleted.
+-----------------------------------
+2024-12-08 20:06:14 - Starting extract resources process
+2024-12-08 20:06:23 - Added presentation from DBMS to extracted_resources.
+2024-12-08 20:06:24 - Added presentation from OS to extracted_resources.
+2024-12-08 20:06:24 - Resources successfully extracted and zipped: extracted_files/resources_2024-12-08_20-06-24.zip
+2024-12-08 20:06:24 - Temporary directory extracted_resources deleted.

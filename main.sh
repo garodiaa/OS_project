@@ -3,13 +3,9 @@
 # Color Codes
 RED='\033[0;31m'
 GREEN='\033[0;32m'
+BLUE='\033[0;34m'
+GRAY='\033[0;37m'
 NC='\033[0m' # No Color (Reset)
-
-# Configuration file path
-config_file="/home/jojo/Documents/GitHub/OS_project/config.txt"
-
-# Log file path
-log_file="/home/jojo/Documents/GitHub/OS_project/log_file.txt"
 
 #BG Colors
 BG_RED='\033[41m'
@@ -19,23 +15,29 @@ BG_BLUE='\033[44m'
 # Bold colors
 BOLD_RED='\033[1;31m'
 BOLD_GREEN='\033[1;32m'
+BOLD_BLUE='\033[1;34m'
+
+# Configuration file path
+config_file="/home/jojo/Documents/GitHub/OS_project/config.txt"
+# Log file path
+log_file="/home/jojo/Documents/GitHub/OS_project/log_file.txt"
 
 # Main Menu Function
-
 # Show Menu
 show_menu() {
     echo "-----------------------------------"
-    echo -e "${BG_BLUE}File Management System${NC}"
+    echo -e "      ${BOLD_BLUE}File Management System${NC}"
     echo "-----------------------------------"
-    echo "1. Initial Setup"
-    echo "2. Backup Now"
+    echo "1. Setup Environment"
+    echo "2. Create Backup Now"
     echo "3. Restore Backup"
     echo "4. Check Schedule Backup Status"
     echo "5. Update Schedule Backup Time"
-    echo "6. Extract Resources"
-    echo "7. End Semester"
+    echo "6. Extract Course Resources"
+    echo "7. Terminate Semester"
     echo "8. Exit"
-    echo "Enter your choice:"
+    echo "-----------------------------------"
+    echo -e "${GRAY}Enter your choice:${NC}"
     read -r choice
     case $choice in
         1) setup ;;
@@ -44,7 +46,7 @@ show_menu() {
         4) check_schedule_backup_status ;;
         5) update_schedule_backup_time ;;
         6) extract_resources ;;
-        7) end_semester ;;
+        7) terminate_semester ;;
         8) echo "Exiting..."; exit 0 ;;
         *) echo -e "${RED}Invalid choice. Try again.${NC}" ;;
     esac
@@ -52,14 +54,14 @@ show_menu() {
 
 # Setup Placeholder
 setup() {
-    echo "Enter the semester name (e.g., Spring_2024):"
+    echo -e "${GRAY}Enter the semester name (e.g., Fall_2024):${NC}"
     read -r semester
     if [[ -z $semester ]]; then
         echo "Semester name cannot be empty!"
         return
     fi
 
-    echo "Enter course names (comma-separated):"
+    echo -e "${GRAY}Enter course names (comma-separated):${NC}"
     read -r course_input
     if [[ -z $course_input ]]; then
         echo "Course list cannot be empty!"
@@ -67,14 +69,14 @@ setup() {
     fi
     IFS=',' read -r -a courses <<< "$course_input"
 
-    echo "Enter the backup time in 24-hour format (HH:MM):"
+    echo -e "${GRAY}Enter the backup time in 24-hour format (HH:MM):${NC}"
     read -r backup_time
     if [[ ! $backup_time =~ ^[0-2][0-9]:[0-5][0-9]$ ]]; then
         echo "Invalid time format!"
         return
     fi
 
-    echo "Enter the backup location (full path):"
+    echo -e "${GRAY}Enter the backup location (full path):${NC}"
     read -r backup_location
     mkdir -p "$backup_location"
 
@@ -110,8 +112,7 @@ create_folders() {
 
 # Backup Function
 backup() {
-    # config_file is already defined at the top
-
+    
     # Read values from config.txt
     config_file="/home/jojo/Documents/GitHub/OS_project/config.txt"
     semester=$(grep "semester=" "$config_file" | cut -d'=' -f2)
@@ -163,7 +164,7 @@ schedule_backup() {
 
 # Backup Now Function (Instant Backup)
 backup_now() {
-    log_file="/home/jojo/Documents/GitHub/OS_project/log_file.txt"
+    # log_file="/home/jojo/Documents/GitHub/OS_project/log_file.txt"
 
     # Log the start of the Backup Now function
     echo "-----------------------------------" >> "$log_file"
@@ -174,19 +175,55 @@ backup_now() {
 
     # Log the completion of the Backup Now function
     echo "$(date '+%Y-%m-%d %H:%M:%S') - Immediate backup completed" >> "$log_file"
-    echo -e "${GREEN}Backup now completed.${NC}"
+    echo -e "${GREEN}Backup now completed succesfully.${NC}"
 }
 
 # Restore Backup Function
 restore_backup() {
-    log_file="/home/jojo/Documents/GitHub/OS_project/log_file.txt"
+    # log_file="/home/jojo/Documents/GitHub/OS_project/log_file.txt"
 
     echo "-----------------------------------" >> "$log_file"
     echo "$(date '+%Y-%m-%d %H:%M:%S') - Starting restore backup" >> "$log_file"
 
-    # Prompt user to select backup file to restore
-    echo "Enter the path of the backup file to restore:"
-    read -r backup_file
+    # # Prompt user to select backup file to restore
+    # echo "Enter the path of the backup file to restore:"
+    # read -r backup_file
+    backup_location=$(grep "backup_location=" "$config_file" | cut -d'=' -f2)
+
+    # List available backup files
+    echo "Available backup files:"
+    if [[ ! -d $backup_location ]]; then
+    echo "$(date '+%Y-%m-%d %H:%M:%S') - Error: Backup location not found." >> "$log_file"
+    echo -e "${RED}Error: Backup location not found.${NC}"
+    return
+    fi
+
+    backup_files=("$backup_location"/*.zip) # Fetch all zip files
+
+    if [[ ${#backup_files[@]} -eq 0 ]]; then
+    echo "$(date '+%Y-%m-%d %H:%M:%S') - Error: No backup folders found." >> "$log_file"
+    echo -e "${RED}Error: No backup folders found.${NC}"
+    return
+    fi
+
+    for i in "${!backup_files[@]}"; do
+    echo "$((i + 1)). ${backup_files[i]##*/}" # Print folder names only
+    done
+
+    # for i in "${!backup_files[@]}"; do
+    #     echo "$((i + 1)). ${backup_files[i]}"
+    # done
+
+    # Prompt user to select a backup file to restore
+    echo -e "${GRAY}Enter the number of the backup file to restore:${NC}"
+    read -r backup_choice
+    if [[ ! "$backup_choice" =~ ^[0-9]+$ ]] || [[ $backup_choice -lt 1 || $backup_choice -gt ${#backup_files[@]} ]]; then
+        echo "$(date '+%Y-%m-%d %H:%M:%S') - Error: Invalid choice." >> "$log_file"
+        echo -e "${RED}Error: Invalid choice.${NC}"
+        return
+    fi
+
+    backup_file="${backup_files[$((backup_choice - 1))]}"
 
     if [[ ! -f $backup_file ]]; then
         echo "$(date '+%Y-%m-%d %H:%M:%S') - Error: Backup file not found." >> "$log_file"
@@ -211,7 +248,7 @@ restore_backup() {
 
 # Check Schedule Backup Status Function
 check_schedule_backup_status() {
-    log_file="/home/jojo/Documents/GitHub/OS_project/log_file.txt"
+    # log_file="/home/jojo/Documents/GitHub/OS_project/log_file.txt"
 
     # Log the start of the function
     echo "-----------------------------------" >> "$log_file"
@@ -220,8 +257,8 @@ check_schedule_backup_status() {
     # Check if the backup job is scheduled in crontab
     if crontab -l 2>/dev/null | grep -q "$(pwd)/main.sh backup"; then
         backup_time=$(grep "backup_time=" config.txt | cut -d'=' -f2)
-        echo -e "${GREEN}Backup is scheduled daily at $backup_time.${NC}"
         echo "$(date '+%Y-%m-%d %H:%M:%S') - Backup is scheduled." >> "$log_file"
+        echo -e "${GREEN}Backup is scheduled daily at $backup_time.${NC}"
     else
         echo -e "${RED}No backup schedule found.${NC}"
         echo "$(date '+%Y-%m-%d %H:%M:%S') - No backup schedule found." >> "$log_file"
@@ -230,18 +267,18 @@ check_schedule_backup_status() {
 
 # update schedule backup time
 update_schedule_backup_time() {
-    log_file="/home/jojo/Documents/GitHub/OS_project/log_file.txt"
+    # log_file="/home/jojo/Documents/GitHub/OS_project/log_file.txt"
 
     # Log the start of the function
     echo "-----------------------------------" >> "$log_file"
     echo "$(date '+%Y-%m-%d %H:%M:%S') - Updating backup schedule time" >> "$log_file"
 
     # Read the current backup time from the configuration
-    config_file="/home/jojo/Documents/GitHub/OS_project/config.txt"
+    # config_file="/home/jojo/Documents/GitHub/OS_project/config.txt"
     backup_time=$(grep "backup_time=" "$config_file" | cut -d'=' -f2)
 
     # Prompt the user to enter the new backup time
-    echo "Enter the new backup time in 24-hour format (HH:MM):"
+    echo -e "${GRAY}Enter the new backup time in 24-hour format (HH:MM):${NC}"
     read -r new_backup_time
     if [[ ! $new_backup_time =~ ^[0-2][0-9]:[0-5][0-9]$ ]]; then
         echo -e "${RED}Invalid time format.${NC}"
@@ -288,7 +325,7 @@ extract_resources() {
     done
 
     # Prompt user to choose courses
-    echo "Enter the number(s) of the course(s) you want to extract resources from (comma-separated):"
+    echo -e "${GRAY}Enter the number(s) of the course(s) you want to extract resources from (comma-separated):${NC}"
     read -r course_choice
     if [[ -z $course_choice ]]; then
         echo "$(date '+%Y-%m-%d %H:%M:%S') - Error: No course selected." >> "$log_file"
@@ -312,7 +349,7 @@ extract_resources() {
     mkdir -p "$output_dir"
 
     # Prompt user to choose the type of resource to extract
-    echo "Enter the type of resource you want to extract (e.g., assignment, presentation, mid-essentials, etc.):"
+    echo -e "${GRAY}Enter the type of resource you want to extract\n(e.g., assignment, presentation, mid-essentials, etc.):${NC}"
     read -r chosen_resource
     if [[ -z $chosen_resource ]]; then
         echo "$(date '+%Y-%m-%d %H:%M:%S') - Error: No resource type selected." >> "$log_file"
@@ -339,6 +376,8 @@ extract_resources() {
     done
 
     # Zip the extracted files
+    mkdir -p "extracted_files"
+    zip_file="extracted_files/resources_$(date +%Y-%m-%d_%H-%M-%S).zip"
     zip -r "$zip_file" "$output_dir" >/dev/null 2>&1
     if [[ $? -eq 0 ]]; then
         echo "$(date '+%Y-%m-%d %H:%M:%S') - Resources successfully extracted and zipped: $zip_file" >> "$log_file"
@@ -355,13 +394,12 @@ extract_resources() {
 
 
 
-
-# End semester function
-end_semester() {
-    log_file="/home/jojo/Documents/GitHub/OS_project/log_file.txt"
+# Terminate semester function
+terminate_semester() {
+    # log_file="/home/jojo/Documents/GitHub/OS_project/log_file.txt"
 
     # Read the semester name from the configuration
-    config_file="/home/jojo/Documents/GitHub/OS_project/config.txt"
+    # config_file="/home/jojo/Documents/GitHub/OS_project/config.txt"
     if [[ ! -f $config_file ]]; then
         echo -e "\n$(date '+%Y-%m-%d %H:%M:%S') - Error: Configuration file not found. Please run setup first." >> "$log_file"
         echo -e "${RED}Error: Configuration file not found. Please run setup first.${NC}"
@@ -372,14 +410,14 @@ end_semester() {
     backup_location=$(grep "backup_location=" "$config_file" | cut -d'=' -f2)
     semester_dir="/home/jojo/Documents/GitHub/OS_project/$semester"
 
-    echo -e "\n$(date '+%Y-%m-%d %H:%M:%S') - Initiating end semester process for $semester" >> "$log_file"
+    echo -e "\n$(date '+%Y-%m-%d %H:%M:%S') - Initiating terminate semester process for $semester" >> "$log_file"
     
     # Confirm with the user before proceeding
-    echo "Are you sure you want to end the semester '$semester'? This will create a final backup, delete older backups, and remove the semester folder. (yes/no)"
+    echo -e "${GRAY}Are you sure you want to terminate the semester '$semester'?\nThis will create a final backup, delete older backups, and remove the semester folder. (yes/no)${NC}"
     read -r confirm
     if [[ "$confirm" != "yes" ]]; then
-        echo -e "\n$(date '+%Y-%m-%d %H:%M:%S') - End semester process aborted by user." >> "$log_file"
-        echo -e "${RED}End semester process aborted.${NC}"
+        echo -e "\n$(date '+%Y-%m-%d %H:%M:%S') - Terminate semester process aborted by user." >> "$log_file"
+        echo -e "${RED}Terminate semester process aborted.${NC}"
         return
     fi
 
