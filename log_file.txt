@@ -308,3 +308,19 @@
 -----------------------------------
 2024-12-08 23:30:01 - Starting backup for semester Fall_2024
 2024-12-08 23:30:01 - Backup successfully created at /home/jojo/Pro_b/Fall_2024_backup_2024-12-08_23-30.zip
+-----------------------------------
+2024-12-09 21:34:06 - Starting backup schedule
+2024-12-09 21:34:06 - Removed old cron jobs for backup
+2024-12-09 21:34:06 - Backup scheduled at 22:22 daily
+-----------------------------------
+2024-12-09 21:35:19 - Starting restore backup
+2024-12-09 21:35:21 - Error: Invalid choice.
+-----------------------------------
+2024-12-09 21:35:35 - Checking backup schedule status
+2024-12-09 21:35:35 - Backup is scheduled.
+-----------------------------------
+2024-12-09 21:35:37 - Updating backup schedule time
+2024-12-09 21:35:44 - Error: Invalid time format.
+-----------------------------------
+2024-12-09 22:22:01 - Starting backup for semester Fall_2025
+2024-12-09 22:22:01 - Backup successfully created at /home/jojo/Pro_b/Fall_2025_backup_2024-12-09_22-22.zip

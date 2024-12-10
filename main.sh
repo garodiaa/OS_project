@@ -35,7 +35,7 @@ show_menu() {
     echo "5. Update Schedule Backup Time"
     echo "6. Extract Course Resources"
     echo "7. Terminate Semester"
-    echo "8. Exit"
+    echo -e "${RED}8. Exit${NC}"
     echo "-----------------------------------"
     echo -e "${GRAY}Enter your choice:${NC}"
     read -r choice
