@@ -1,4 +1,0 @@
-semester=Spring_2025
-courses=OS OS lab ML ML_lab DBMS DBMS_lab NLP
-backup_time=23:30
-backup_location=/home/jojo/Pro_b
