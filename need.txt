@@ -1,1 +1,3 @@
 /home/jojo/Pro_b
+
+crontab -l

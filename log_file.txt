@@ -44,3 +44,7 @@
 2024-12-12 00:51:13 - Semester folder '/home/jojo/Documents/GitHub/OS_project/Spring_2025' deleted successfully.
 
 2024-12-12 00:51:13 - Configuration file deleted successfully.
+-----------------------------------
+2024-12-12 00:56:57 - Starting backup schedule
+2024-12-12 00:56:57 - Removed old cron jobs for backup
+2024-12-12 00:56:57 - Backup scheduled at 23:30 daily
