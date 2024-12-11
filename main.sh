@@ -22,7 +22,7 @@ config_file="/home/jojo/Documents/GitHub/OS_project/config.txt"
 # Log file path
 log_file="/home/jojo/Documents/GitHub/OS_project/log_file.txt"
 
-# Main Menu Function
+
 # Show Menu
 show_menu() {
     echo "-----------------------------------"
@@ -52,7 +52,7 @@ show_menu() {
     esac
 }
 
-# Setup Placeholder
+# Setup Function
 setup() {
     echo -e "${GRAY}Enter the semester name (e.g., Fall_2024):${NC}"
     read -r semester
@@ -89,7 +89,6 @@ setup() {
     echo -e "${GREEN}Setup complete!${NC}"
 
     create_folders "$semester" "${courses[@]}"
-    # echo -e "${GREEN}Folder creation complete!${NC}"
 
     schedule_backup
 }
@@ -142,8 +141,7 @@ backup() {
 
 # Schedule Backup
 schedule_backup() {
-    # log_file is already defined at the top of the script
-
+   
     # Log the start of the function
     echo "-----------------------------------" >> "$log_file"
     echo "$(date '+%Y-%m-%d %H:%M:%S') - Starting backup schedule" >> "$log_file"
@@ -164,7 +162,6 @@ schedule_backup() {
 
 # Backup Now Function (Instant Backup)
 backup_now() {
-    # log_file="/home/jojo/Documents/GitHub/OS_project/log_file.txt"
 
     # Log the start of the Backup Now function
     echo "-----------------------------------" >> "$log_file"
@@ -180,14 +177,11 @@ backup_now() {
 
 # Restore Backup Function
 restore_backup() {
-    # log_file="/home/jojo/Documents/GitHub/OS_project/log_file.txt"
 
     echo "-----------------------------------" >> "$log_file"
     echo "$(date '+%Y-%m-%d %H:%M:%S') - Starting restore backup" >> "$log_file"
 
-    # # Prompt user to select backup file to restore
-    # echo "Enter the path of the backup file to restore:"
-    # read -r backup_file
+    # Read values from config.txt
     backup_location=$(grep "backup_location=" "$config_file" | cut -d'=' -f2)
 
     # List available backup files
@@ -209,10 +203,6 @@ restore_backup() {
     for i in "${!backup_files[@]}"; do
     echo "$((i + 1)). ${backup_files[i]##*/}" # Print folder names only
     done
-
-    # for i in "${!backup_files[@]}"; do
-    #     echo "$((i + 1)). ${backup_files[i]}"
-    # done
 
     # Prompt user to select a backup file to restore
     echo -e "${GRAY}Enter the number of the backup file to restore:${NC}"
@@ -248,8 +238,7 @@ restore_backup() {
 
 # Check Schedule Backup Status Function
 check_schedule_backup_status() {
-    # log_file="/home/jojo/Documents/GitHub/OS_project/log_file.txt"
-
+    
     # Log the start of the function
     echo "-----------------------------------" >> "$log_file"
     echo "$(date '+%Y-%m-%d %H:%M:%S') - Checking backup schedule status" >> "$log_file"
@@ -267,14 +256,12 @@ check_schedule_backup_status() {
 
 # update schedule backup time
 update_schedule_backup_time() {
-    # log_file="/home/jojo/Documents/GitHub/OS_project/log_file.txt"
-
+    
     # Log the start of the function
     echo "-----------------------------------" >> "$log_file"
     echo "$(date '+%Y-%m-%d %H:%M:%S') - Updating backup schedule time" >> "$log_file"
 
-    # Read the current backup time from the configuration
-    # config_file="/home/jojo/Documents/GitHub/OS_project/config.txt"
+    # Read the current backup time from the configuration file
     backup_time=$(grep "backup_time=" "$config_file" | cut -d'=' -f2)
 
     # Prompt the user to enter the new backup time
@@ -294,7 +281,6 @@ update_schedule_backup_time() {
 
     # Reschedule the backup job with the new time
     schedule_backup
-
 }
 
 # Extract Resources Function
@@ -398,10 +384,8 @@ extract_resources() {
 
 # Terminate semester function
 terminate_semester() {
-    # log_file="/home/jojo/Documents/GitHub/OS_project/log_file.txt"
-
+ 
     # Read the semester name from the configuration
-    # config_file="/home/jojo/Documents/GitHub/OS_project/config.txt"
     if [[ ! -f $config_file ]]; then
         echo -e "\n$(date '+%Y-%m-%d %H:%M:%S') - Error: Configuration file not found. Please run setup first." >> "$log_file"
         echo -e "${RED}Error: Configuration file not found. Please run setup first.${NC}"
